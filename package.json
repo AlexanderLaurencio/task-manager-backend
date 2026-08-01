@@ -1,0 +1,28 @@
+{
+  "name": "task-manager-backend",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Alexander Neftali Miranda",
+  "type": "module",
+  "main": "app.ts",
+  "scripts": {
+    "test": "vitest",
+    "test:watch": "vitest",
+    "test:run": "vitest run",
+    "node": "npx tsc && cd dist/ && node index.js",
+    "ct": "npx tsc && vitest"
+  },
+  "dependencies": {
+    "@types/sqlite3": "^3.1.11",
+    "sqlite3": "^6.0.1"
+  },
+  "devDependencies": {
+    "@types/supertest": "^7.2.1",
+    "supertest": "^7.2.2",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.10"
+  },
+  "allowScripts": {
+    "sqlite3@6.0.1": true
+  }
+}
