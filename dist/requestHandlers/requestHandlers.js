@@ -78,7 +78,6 @@ export async function handleQueryRequest(db, request, response) {
         body += chunk;
     });
     request.on("end", async () => {
-        // let query = JSON.parse(body) as QueryProps;
         let url = new URL(request.url, server);
         let urlParams = new URLSearchParams(url.search);
         let filter = urlParams.get("filter");
@@ -109,8 +108,9 @@ export async function handleQueryRequest(db, request, response) {
 }
 ;
 export async function handleDeleteRequest(db, request, response) {
-    let urlSplitted = request.url.split("/");
-    let taskId = Number(urlSplitted[1]);
+    let url = new URL(request.url, server);
+    let urlParams = new URLSearchParams(url.search);
+    let taskId = Number(urlParams.get("id"));
     request.on("error", (err) => {
         console.log("Error deleting task", err);
         response.writeHead(500, {

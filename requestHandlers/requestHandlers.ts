@@ -109,7 +109,6 @@ export async function handleQueryRequest(db: Database, request: IncomingMessage,
     });
 
     request.on("end", async () => {
-        // let query = JSON.parse(body) as QueryProps;
         let url = new URL(request.url!, server);
         
         let urlParams = new URLSearchParams(url.search);
@@ -156,8 +155,10 @@ export async function handleQueryRequest(db: Database, request: IncomingMessage,
 };
 
 export async function handleDeleteRequest(db: Database, request: IncomingMessage, response: ServerResponse) {
-    let urlSplitted = request.url!.split("/");
-    let taskId = Number(urlSplitted[1]);
+    let url = new URL(request.url!, server);
+        
+    let urlParams = new URLSearchParams(url.search);
+    let taskId = Number(urlParams.get("id"));
 
     request.on("error", (err) => {
         console.log("Error deleting task", err)

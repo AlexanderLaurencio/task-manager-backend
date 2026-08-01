@@ -1,6 +1,6 @@
 import { CONTENT_TYPE } from "../../constants/constants.js";
 export function checkStatusAndPriority(response, taskStatus, taskPriority) {
-    if (!["completed", "pending", "isPending"].includes(taskStatus)) {
+    if (!["completed", "pending", "inProgress"].includes(taskStatus)) {
         response.writeHead(400, {
             "Content-Type": CONTENT_TYPE.text
         });
