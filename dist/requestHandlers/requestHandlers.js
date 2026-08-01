@@ -101,7 +101,7 @@ export async function handleQueryRequest(db, request, response) {
 ;
 export async function handleDeleteRequest(db, request, response) {
     let urlSplitted = request.url.split("/");
-    let taskId = Number(urlSplitted[2]);
+    let taskId = Number(urlSplitted[1]);
     request.on("error", (err) => {
         console.log("Error deleting task", err);
         response.writeHead(500, {
