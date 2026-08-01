@@ -46,6 +46,8 @@ export function getAllTasks(db: Database) {
 export function getFilteredTasks(db: Database, query: QueryProps) {
     return new Promise((resolve,reject) => {
 
+        console.log(query);
+
         if (!query.filter || !query.order || !query.page) {
             
             console.log("The filter or order in getFilteredTasks are empty");
