@@ -139,7 +139,7 @@ export async function handleQueryRequest(db: Database, request: IncomingMessage,
 
 export async function handleDeleteRequest(db: Database, request: IncomingMessage, response: ServerResponse) {
     let urlSplitted = request.url!.split("/");
-    let taskId = Number(urlSplitted[2]);
+    let taskId = Number(urlSplitted[1]);
 
     request.on("error", (err) => {
         console.log("Error deleting task", err)

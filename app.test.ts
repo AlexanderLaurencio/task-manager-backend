@@ -7,7 +7,7 @@ import { getCurrentDate } from "./utils/date/date.js";
 describe("Testing all the request handlers", () => {
     test("Should respond with a 200 status code, and json content type", () => {
         const response = request(app).
-            post("/tasks")
+            post("/")
             .expect("Content-Type", /json/)
             .expect(200)
             .send({
@@ -30,7 +30,7 @@ describe("Testing all the request handlers", () => {
 
     test("Should respond with a 200 status code, and json content type", () => {
         const response = request(app)
-        .get("/tasks")
+        .get("/")
         .expect("Content-Type", /json/)
         .expect(200)
         .end((err, res) => {
@@ -45,7 +45,7 @@ describe("Testing all the request handlers", () => {
 
     test("Should respond with a 200 status code, and text content type", () => {
         const response = request(app)
-        .delete("/tasks/1")
+        .delete("/1")
         .expect(200)
         .expect(/text/)
         .end((err, res) => {
@@ -60,7 +60,7 @@ describe("Testing all the request handlers", () => {
     
     test("Should repond with a 200 status code, and text content type", () => {
         const response = request(app)
-        .put("/tasks")
+        .put("/")
         .expect(200)
         .expect(/text/)
         .end((err, res) => {
