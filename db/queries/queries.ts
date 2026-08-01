@@ -48,7 +48,7 @@ export function getFilteredTasks(db: Database, query: QueryProps) {
 
         console.log(query);
 
-        if (!query.filter || !query.order || !query.page) {
+        if (!query.filter || !query.order || isNaN(query.page)) {
             
             console.log("The filter or order in getFilteredTasks are empty");
             reject("Filter or order are empty")
