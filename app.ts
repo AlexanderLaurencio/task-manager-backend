@@ -5,7 +5,7 @@ import { handleDeleteRequest, handleQueryRequest, handlePostRequest, handlePutRe
 import { CONTENT_TYPE, hostAllowed, root, server } from "./constants/constants.js";
 import { seedTasks } from "./mockData/mockTasks.js";
 
-const db: Database = new sqlite3.Database("./db/tasks.db");
+const db: Database = new sqlite3.Database("./dist/db/tasks.db");
 
 db.exec(`CREATE TABLE IF NOT EXISTS Tasks(
         task_id INTEGER PRIMARY KEY AUTOINCREMENT,

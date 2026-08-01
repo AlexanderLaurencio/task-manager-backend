@@ -2,7 +2,7 @@ import http from "node:http";
 import sqlite3 from "sqlite3";
 import { handleDeleteRequest, handleQueryRequest, handlePostRequest, handlePutRequest } from "./requestHandlers/requestHandlers.js";
 import { root, server } from "./constants/constants.js";
-const db = new sqlite3.Database("./db/tasks.db");
+const db = new sqlite3.Database("./dist/db/tasks.db");
 db.exec(`CREATE TABLE IF NOT EXISTS Tasks(
         task_id INTEGER PRIMARY KEY AUTOINCREMENT,
         task_title VARCHAR(100) NOT NULL,
