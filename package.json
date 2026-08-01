@@ -15,8 +15,7 @@
     "ct": "npx tsc && vitest"
   },
   "dependencies": {
-    "@types/sqlite3": "^3.1.11",
-    "sqlite3": "^6.0.1"
+    "sqlite3": "^5.1.7"
   },
   "devDependencies": {
     "@types/supertest": "^7.2.1",
@@ -25,6 +24,6 @@
     "vitest": "^4.1.10"
   },
   "allowScripts": {
-    "sqlite3@6.0.1": true
+    "sqlite3@5.1.7": true
   }
 }
