@@ -1,8 +1,8 @@
 import { IncomingMessage, ServerResponse } from "node:http"
-import { CONTENT_TYPE } from "../constants/constants.js";
+import { CONTENT_TYPE, server } from "../constants/constants.js";
 import { type Database } from "sqlite3";
 import { insertTask, getStats, getTotalTasks, deleteTask, updateTask, getFilteredTasks, getTotalFilteredTasks, getAllTasks } from "../db/queries/queries.js";
-import { QueryProps, TaskProps, TaskPropsExtended } from "../types/types.js";
+import { Filter, Order, QueryProps, TaskProps, TaskPropsExtended } from "../types/types.js";
 import { isBeforeToday } from "../utils/date/date.js";
 import { checkStatusAndPriority } from "./checkValues/checkValues.js";
 
@@ -109,7 +109,18 @@ export async function handleQueryRequest(db: Database, request: IncomingMessage,
     });
 
     request.on("end", async () => {
-        let query = JSON.parse(body) as QueryProps;
+        // let query = JSON.parse(body) as QueryProps;
+        let url = new URLSearchParams(request.url);
+
+        let filter = url.get("filter") as Filter;
+
+        let order = url.get("order") as Order;
+
+        let pattern = url.get("pattern") as string;
+
+        let page = Number(url.get("page")) as number;
+
+        let query = {filter: filter, order: order, pattern: pattern, page: page} as QueryProps;
 
         try {
 

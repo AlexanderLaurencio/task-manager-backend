@@ -78,7 +78,13 @@ export async function handleQueryRequest(db, request, response) {
         body += chunk;
     });
     request.on("end", async () => {
-        let query = JSON.parse(body);
+        // let query = JSON.parse(body) as QueryProps;
+        let url = new URLSearchParams(request.url);
+        let filter = url.get("filter");
+        let order = url.get("order");
+        let pattern = url.get("pattern");
+        let page = Number(url.get("page"));
+        let query = { filter: filter, order: order, pattern: pattern, page: page };
         try {
             let tasks = await getFilteredTasks(db, query);
             let rowsNumber = await getTotalFilteredTasks(db, query);

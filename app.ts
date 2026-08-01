@@ -31,19 +31,19 @@ export const app = http.createServer((request: IncomingMessage, response: Server
         response.end()
     }
 
-    if (request.url === "/tasks" && request.method === "QUERY") {
+    if (request.url === "/task-manager-app" && request.method === "GET") {
         handleQueryRequest(db, request, response)
     }
 
-    if (request.url === "/tasks" && request.method === "POST") {
+    if (request.url === "/task-manager-app" && request.method === "POST") {
         handlePostRequest(db, request, response)
     }
 
-    if (request.url?.startsWith("/tasks/") && request.method === "DELETE") {
+    if (request.url?.startsWith("/task-manager-app/") && request.method === "DELETE") {
         handleDeleteRequest(db,request,response)
     }
     
-    if (request.url === "/tasks" && request.method === "PUT") {
+    if (request.url === "/task-manager-app" && request.method === "PUT") {
         handlePutRequest(db,request,response)
     } 
     
