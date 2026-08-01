@@ -23,7 +23,7 @@
     "typescript": "^7.0.2",
     "vitest": "^4.1.10"
   },
-  "allowScripts": {
-    "sqlite3@5.1.7": true
-  }
+  "trustedDependencies": [
+    "sqlite3"
+  ]
 }
