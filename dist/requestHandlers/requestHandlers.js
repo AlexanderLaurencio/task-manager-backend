@@ -1,4 +1,4 @@
-import { CONTENT_TYPE } from "../constants/constants.js";
+import { CONTENT_TYPE, server } from "../constants/constants.js";
 import { insertTask, getStats, getTotalTasks, deleteTask, updateTask, getFilteredTasks, getTotalFilteredTasks } from "../db/queries/queries.js";
 import { isBeforeToday } from "../utils/date/date.js";
 import { checkStatusAndPriority } from "./checkValues/checkValues.js";
@@ -79,11 +79,12 @@ export async function handleQueryRequest(db, request, response) {
     });
     request.on("end", async () => {
         // let query = JSON.parse(body) as QueryProps;
-        let url = new URLSearchParams(request.url);
-        let filter = url.get("filter");
-        let order = url.get("order");
-        let pattern = url.get("pattern");
-        let page = Number(url.get("page"));
+        let url = new URL(request.url, server);
+        let urlParams = new URLSearchParams(url.search);
+        let filter = urlParams.get("filter");
+        let order = urlParams.get("order");
+        let pattern = urlParams.get("pattern");
+        let page = Number(urlParams.get("page"));
         let query = { filter: filter, order: order, pattern: pattern, page: page };
         console.log(query);
         try {

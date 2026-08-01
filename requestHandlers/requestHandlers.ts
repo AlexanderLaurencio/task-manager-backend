@@ -110,15 +110,17 @@ export async function handleQueryRequest(db: Database, request: IncomingMessage,
 
     request.on("end", async () => {
         // let query = JSON.parse(body) as QueryProps;
-        let url = new URLSearchParams(request.url);
+        let url = new URL(request.url!, server);
+        
+        let urlParams = new URLSearchParams(url.search);
 
-        let filter = url.get("filter") as Filter;
+        let filter = urlParams.get("filter") as Filter; 
 
-        let order = url.get("order") as Order;
+        let order = urlParams.get("order") as Order;
 
-        let pattern = url.get("pattern") as string;
+        let pattern = urlParams.get("pattern") as string;
 
-        let page = Number(url.get("page")) as number;
+        let page = Number(urlParams.get("page")) as number;
 
         let query = {filter: filter, order: order, pattern: pattern, page: page} as QueryProps;
 

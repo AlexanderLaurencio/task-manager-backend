@@ -1,7 +1,7 @@
 import http from "node:http";
 import sqlite3 from "sqlite3";
 import { handleDeleteRequest, handleQueryRequest, handlePostRequest, handlePutRequest } from "./requestHandlers/requestHandlers.js";
-import { hostAllowed } from "./constants/constants.js";
+import { hostAllowed, server } from "./constants/constants.js";
 const db = new sqlite3.Database("./db/tasks.db");
 db.exec(`CREATE TABLE IF NOT EXISTS Tasks(
         task_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -26,6 +26,9 @@ export const app = http.createServer((request, response) => {
         response.end();
     }
     if (request.url === "/task-manager-app" && request.method === "GET") {
+        let url = new URL(request.url, server);
+        console.log("Get request being handled");
+        console.log("SEARCH PARAMS: ", url.search);
         handleQueryRequest(db, request, response);
     }
     if (request.url === "/task-manager-app" && request.method === "POST") {
