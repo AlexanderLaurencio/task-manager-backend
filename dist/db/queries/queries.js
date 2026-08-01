@@ -38,18 +38,12 @@ export function getAllTasks(db) {
 export function getFilteredTasks(db, query) {
     return new Promise((resolve, reject) => {
         console.log(query);
-        if (!query.filter || !query.order || isNaN(query.page)) {
-            console.log("The filter or order in getFilteredTasks are empty");
-            reject("Filter or order are empty");
-        }
+        // if (!query.filter || !query.order || isNaN(query.page)) {
+        //     console.log("The filter or order in getFilteredTasks are empty");
+        //     reject("Filter or order are empty")
+        // }
         let filter = query.filter === "all" ? "%" : `%${query.filter}%`;
-        let pattern;
-        if (!query.pattern) {
-            pattern = "%";
-        }
-        else {
-            pattern = `%${query.pattern}%`;
-        }
+        let pattern = !query.pattern ? "%" : `%${query.pattern}%`;
         let offset = Number(query.page) * 10;
         let [orderBy, order] = returnOrder(query.order);
         db.all(`SELECT * FROM Tasks
