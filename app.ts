@@ -32,10 +32,9 @@ export const app = http.createServer((request: IncomingMessage, response: Server
     }
 
     if (request.method === "GET") {
-        let url = new URL(request.url!, server);
     
         console.log("Get request being handled");
-        console.log("SEARCH PARAMS: ", url.search);
+        console.log("SEARCH PARAMS: ", request.url);
         handleQueryRequest(db, request, response)
     }
 
