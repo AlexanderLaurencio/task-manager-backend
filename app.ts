@@ -2,7 +2,7 @@ import http, { IncomingMessage, ServerResponse } from "node:http";
 import sqlite3 from "sqlite3";
 import { type Database } from "sqlite3";
 import { handleDeleteRequest, handleQueryRequest, handlePostRequest, handlePutRequest } from "./requestHandlers/requestHandlers.js";
-import { hostAllowed, server } from "./constants/constants.js";
+import { CONTENT_TYPE, hostAllowed, server } from "./constants/constants.js";
 
 const db: Database = new sqlite3.Database("./db/tasks.db");
 
@@ -30,6 +30,18 @@ export const app = http.createServer((request: IncomingMessage, response: Server
         response.statusCode = 204;
         response.end()
     }
+
+    if (request.method === "GET") {
+            let url = new URL(request.url!, server);
+            console.log("Get request being handled");
+            console.log("SEARCH PARAMS: ", url.search);
+    
+            response.writeHead(200, {
+                "Content-Type": CONTENT_TYPE.text
+            });
+    
+            response.end("Nigga")
+        }
 
     if (request.url === "/task-manager-app" && request.method === "GET") {
         let url = new URL(request.url!, server);
