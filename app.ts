@@ -32,9 +32,6 @@ export const app = http.createServer((request: IncomingMessage, response: Server
     }
 
     if (request.method === "GET") {
-    
-        console.log("Get request being handled");
-        console.log("SEARCH PARAMS: ", request.url);
         handleQueryRequest(db, request, response)
     }
 

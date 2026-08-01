@@ -26,8 +26,6 @@ export const app = http.createServer((request, response) => {
         response.end();
     }
     if (request.method === "GET") {
-        console.log("Get request being handled");
-        console.log("SEARCH PARAMS: ", request.url);
         handleQueryRequest(db, request, response);
     }
     if (request.url === "/" && request.method === "POST") {
