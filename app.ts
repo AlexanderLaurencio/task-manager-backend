@@ -38,7 +38,6 @@ export const app = http.createServer((request: IncomingMessage, response: Server
 
     if (url.pathname === root && request.method === "GET") {
         handleQueryRequest(db, request, response);
-        seedTasks(db);
     }
 
     if (url.pathname === root && request.method === "POST") {
