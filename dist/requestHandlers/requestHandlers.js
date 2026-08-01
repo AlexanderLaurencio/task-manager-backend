@@ -1,7 +1,7 @@
 import { CONTENT_TYPE, server } from "../constants/constants.js";
 import { insertTask, getStats, getTotalTasks, deleteTask, updateTask, getFilteredTasks, getTotalFilteredTasks } from "../db/queries/queries.js";
 import { isBeforeToday } from "../utils/date/date.js";
-import { checkStatusAndPriority } from "./checkValues/checkValues.js";
+import { checkStatusAndPriority } from "../utils/checkValues/checkValues.js";
 export function handlePostRequest(db, request, response) {
     let body = "";
     request.on("error", (err) => {
@@ -88,13 +88,15 @@ export async function handleQueryRequest(db, request, response) {
         let query = { filter: filter, order: order, pattern: pattern, page: page };
         try {
             let tasks = await getFilteredTasks(db, query);
-            let rowsNumber = await getTotalFilteredTasks(db, query);
+            let totalFilteredTask = await getTotalFilteredTasks(db, query);
             const stats = await getStats(db);
             const totalTasks = await getTotalTasks(db);
+            let body = { tasks: tasks, stats: stats, totalTasks: totalTasks, rowsNumber: totalFilteredTask };
             response.writeHead(200, {
                 "Content-Type": CONTENT_TYPE.json
             });
-            response.end(JSON.stringify({ tasks: tasks, stats: stats, totalTasks: totalTasks, rowsNumber: rowsNumber.length }));
+            console.log(totalFilteredTask);
+            response.end(JSON.stringify(body));
         }
         catch (error) {
             console.log("Error getting tasks", error);

@@ -54,7 +54,7 @@ export function getFilteredTasks(db: Database, query: QueryProps) {
 
         let filter = query.filter === "all" ? "%" : `%${query.filter}%`;
 
-        let pattern = !query.pattern ? "%" : `%${query.pattern}%`;
+        let pattern = String(query.pattern) === "null" ? "%" : `%${query.pattern}%`;
 
         let offset = Number(query.page) * 10;
 
@@ -91,7 +91,8 @@ export function getFilteredTasks(db: Database, query: QueryProps) {
 export function getTotalFilteredTasks(db: Database, query: QueryProps) {
     return new Promise((resolve,reject) => {
 
-        if (!query.filter || !query.order || !query.page) {
+
+        if (!query.filter || !query.order || isNaN(query.page)) {
             
             console.log("The filter or order in getTotalFilteredTasks are empty");
             reject("Filter or order are empty")
@@ -99,13 +100,7 @@ export function getTotalFilteredTasks(db: Database, query: QueryProps) {
 
         let filter = query.filter === "all" ? "%" : `%${query.filter}%`;
 
-        let pattern; 
-        
-        if (!query.pattern) {
-            pattern = "%"
-        } else {
-            pattern = `%${query.pattern}%`
-        }
+        let pattern = String(query.pattern) === "null" ? "%" : `%${query.pattern}%`;
 
         let [orderBy, order] = returnOrder(query.order);
 
@@ -121,7 +116,7 @@ export function getTotalFilteredTasks(db: Database, query: QueryProps) {
 
             } else {
 
-                resolve(rows)
+                resolve(rows.length)
 
             }
 

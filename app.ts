@@ -2,7 +2,7 @@ import http, { IncomingMessage, ServerResponse } from "node:http";
 import sqlite3 from "sqlite3";
 import { type Database } from "sqlite3";
 import { handleDeleteRequest, handleQueryRequest, handlePostRequest, handlePutRequest } from "./requestHandlers/requestHandlers.js";
-import { CONTENT_TYPE, hostAllowed, server } from "./constants/constants.js";
+import { CONTENT_TYPE, hostAllowed, root, server } from "./constants/constants.js";
 
 const db: Database = new sqlite3.Database("./db/tasks.db");
 
@@ -21,29 +21,33 @@ db.exec(`CREATE TABLE IF NOT EXISTS Tasks(
 export const app = http.createServer((request: IncomingMessage, response: ServerResponse) => {
     response.setHeaders(new Headers(
         {
-            "Access-Control-Allow-Origin": hostAllowed,
+            "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS, QUERY",
             "Access-Control-Allow-Headers": "Content-Type"
         }))
+
+    let url = new URL(request.url!, server);
+
+    console.log(url.pathname);
 
     if (request.method === "OPTIONS") {
         response.statusCode = 204;
         response.end()
     }
 
-    if (request.method === "GET") {
+    if (url.pathname === root && request.method === "GET") {
         handleQueryRequest(db, request, response)
     }
 
-    if (request.url === "/" && request.method === "POST") {
+    if (url.pathname === root && request.method === "POST") {
         handlePostRequest(db, request, response)
     }
 
-    if (request.url?.startsWith("/") && request.method === "DELETE") {
+    if (url.pathname?.startsWith(root) && request.method === "DELETE") {
         handleDeleteRequest(db,request,response)
     }
     
-    if (request.url === "/" && request.method === "PUT") {
+    if (url.pathname === root && request.method === "PUT") {
         handlePutRequest(db,request,response)
     } 
     

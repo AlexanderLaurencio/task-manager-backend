@@ -42,7 +42,7 @@ export function getFilteredTasks(db, query) {
             reject("Filter, order or page contain invalid values");
         }
         let filter = query.filter === "all" ? "%" : `%${query.filter}%`;
-        let pattern = !query.pattern ? "%" : `%${query.pattern}%`;
+        let pattern = String(query.pattern) === "null" ? "%" : `%${query.pattern}%`;
         let offset = Number(query.page) * 10;
         let [orderBy, order] = returnOrder(query.order);
         db.all(`SELECT * FROM Tasks
@@ -68,18 +68,12 @@ export function getFilteredTasks(db, query) {
 //getFilteredTasks, but with LIMIT in its SQL query. 
 export function getTotalFilteredTasks(db, query) {
     return new Promise((resolve, reject) => {
-        if (!query.filter || !query.order || !query.page) {
+        if (!query.filter || !query.order || isNaN(query.page)) {
             console.log("The filter or order in getTotalFilteredTasks are empty");
             reject("Filter or order are empty");
         }
         let filter = query.filter === "all" ? "%" : `%${query.filter}%`;
-        let pattern;
-        if (!query.pattern) {
-            pattern = "%";
-        }
-        else {
-            pattern = `%${query.pattern}%`;
-        }
+        let pattern = String(query.pattern) === "null" ? "%" : `%${query.pattern}%`;
         let [orderBy, order] = returnOrder(query.order);
         db.all(`SELECT * FROM Tasks
                 WHERE task_status LIKE '${filter}' 
@@ -89,7 +83,7 @@ export function getTotalFilteredTasks(db, query) {
                 reject(err);
             }
             else {
-                resolve(rows);
+                resolve(rows.length);
             }
         });
     });

@@ -4,7 +4,7 @@ import { type Database } from "sqlite3";
 import { insertTask, getStats, getTotalTasks, deleteTask, updateTask, getFilteredTasks, getTotalFilteredTasks, getAllTasks } from "../db/queries/queries.js";
 import { Filter, Order, QueryProps, TaskProps, TaskPropsExtended } from "../types/types.js";
 import { isBeforeToday } from "../utils/date/date.js";
-import { checkStatusAndPriority } from "./checkValues/checkValues.js";
+import { checkStatusAndPriority } from "../utils/checkValues/checkValues.js";
 
 export function handlePostRequest(db: Database, request: IncomingMessage, response: ServerResponse) {
     let body = "";
@@ -127,15 +127,20 @@ export async function handleQueryRequest(db: Database, request: IncomingMessage,
         try {
 
             let tasks = await getFilteredTasks(db,query) as TaskProps[];
-            let rowsNumber = await getTotalFilteredTasks(db,query) as TaskProps[];
+            let totalFilteredTask = await getTotalFilteredTasks(db,query) as TaskProps[];
 
             const stats = await getStats(db);
             const totalTasks = await getTotalTasks(db);
+    
+            let body = { tasks: tasks, stats: stats, totalTasks: totalTasks, rowsNumber: totalFilteredTask };
+
             response.writeHead(200, {
                 "Content-Type": CONTENT_TYPE.json
             });
 
-            response.end(JSON.stringify({ tasks: tasks, stats: stats, totalTasks: totalTasks, rowsNumber: rowsNumber.length }));
+            console.log(totalFilteredTask);
+
+            response.end(JSON.stringify(body));
 
         } catch (error) {
 
