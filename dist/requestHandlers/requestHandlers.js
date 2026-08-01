@@ -85,6 +85,7 @@ export async function handleQueryRequest(db, request, response) {
         let pattern = url.get("pattern");
         let page = Number(url.get("page"));
         let query = { filter: filter, order: order, pattern: pattern, page: page };
+        console.log(query);
         try {
             let tasks = await getFilteredTasks(db, query);
             let rowsNumber = await getTotalFilteredTasks(db, query);

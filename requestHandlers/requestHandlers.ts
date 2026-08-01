@@ -122,6 +122,8 @@ export async function handleQueryRequest(db: Database, request: IncomingMessage,
 
         let query = {filter: filter, order: order, pattern: pattern, page: page} as QueryProps;
 
+        console.log(query);
+
         try {
 
             let tasks = await getFilteredTasks(db,query) as TaskProps[];
