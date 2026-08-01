@@ -28,7 +28,7 @@ export const app = http.createServer((request, response) => {
     if (request.method === "GET") {
         let url = new URL(request.url, server);
         console.log("Get request being handled");
-        console.log("SEARCH PARAMS: ", url.search);
+        console.log("SEARCH PARAMS: ", url);
         response.writeHead(200, {
             "Content-Type": CONTENT_TYPE.text
         });
