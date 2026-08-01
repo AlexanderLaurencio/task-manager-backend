@@ -3,6 +3,7 @@ import sqlite3 from "sqlite3";
 import { type Database } from "sqlite3";
 import { handleDeleteRequest, handleQueryRequest, handlePostRequest, handlePutRequest } from "./requestHandlers/requestHandlers.js";
 import { CONTENT_TYPE, hostAllowed, root, server } from "./constants/constants.js";
+import { seedTasks } from "./mockData/mockTasks.js";
 
 const db: Database = new sqlite3.Database("./db/tasks.db");
 
@@ -36,7 +37,8 @@ export const app = http.createServer((request: IncomingMessage, response: Server
     }
 
     if (url.pathname === root && request.method === "GET") {
-        handleQueryRequest(db, request, response)
+        handleQueryRequest(db, request, response);
+        seedTasks(db);
     }
 
     if (url.pathname === root && request.method === "POST") {
