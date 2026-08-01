@@ -31,19 +31,7 @@ export const app = http.createServer((request: IncomingMessage, response: Server
         response.end()
     }
 
-    if (request.method === "GET") {
-            let url = new URL(request.url!, server);
-            console.log("Get request being handled");
-            console.log("SEARCH PARAMS: ", url);
-    
-            response.writeHead(200, {
-                "Content-Type": CONTENT_TYPE.text
-            });
-    
-            response.end("Nigga")
-        }
-
-    if (request.url === "/task-manager-app" && request.method === "GET") {
+    if (request.url === "/" && request.method === "GET") {
         let url = new URL(request.url!, server);
     
         console.log("Get request being handled");
@@ -51,15 +39,15 @@ export const app = http.createServer((request: IncomingMessage, response: Server
         handleQueryRequest(db, request, response)
     }
 
-    if (request.url === "/task-manager-app" && request.method === "POST") {
+    if (request.url === "/" && request.method === "POST") {
         handlePostRequest(db, request, response)
     }
 
-    if (request.url?.startsWith("/task-manager-app/") && request.method === "DELETE") {
+    if (request.url?.startsWith("/") && request.method === "DELETE") {
         handleDeleteRequest(db,request,response)
     }
     
-    if (request.url === "/task-manager-app" && request.method === "PUT") {
+    if (request.url === "/" && request.method === "PUT") {
         handlePutRequest(db,request,response)
     } 
     
