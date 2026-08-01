@@ -124,7 +124,7 @@ export async function handleQueryRequest(db: Database, request: IncomingMessage,
 
         let query = {filter: filter, order: order, pattern: pattern, page: page} as QueryProps;
 
-        console.log(query);
+        console.log(url.search);
 
         try {
 
